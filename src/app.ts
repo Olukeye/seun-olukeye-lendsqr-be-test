@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import routes from './routes/user.routes';
 import { stream } from './utils/logger';
-// import { errorHandler, notFoundHandler } from './utils/errors';
+import { errorHandler, notFoundHandler } from './middleware/errors.middlewares';
 
 const app: Application = express();
 
@@ -35,7 +35,7 @@ app.get('/health', (_req: Request, res: Response) => {
 });
 
 app.use('/api/v1', routes);
-// app.use(notFoundHandler);
-// app.use(errorHandler);
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 export default app;

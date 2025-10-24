@@ -1,6 +1,6 @@
 import db from "../config/database";
 import { User, CreateUserDTO } from "../models/models/types";
-import { NotFoundError } from "../utils/errors";
+import { NotFoundError, UserExistError } from "../utils/errors";
 import logger from "../utils/logger";
 
 
@@ -10,7 +10,7 @@ export class UserService {
       const existingUser = await db('users').where({email: data.email}).first()
 
     if(existingUser){
-      throw new NotFoundError("user already  exist")
+      throw new UserExistError("user already  exist")
     }
 
     const [userId] = await db('users').insert({

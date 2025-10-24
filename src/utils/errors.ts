@@ -16,6 +16,12 @@ export class ValidationError extends AppError {
   }
 }
 
+export class UserExistError extends AppError {
+  constructor(message: string) {
+    super(message, 400, 'User Already exist');
+  }
+}
+
 export class UnauthorizedError extends AppError {
   constructor(message = 'Unauthorized') {
     super(message, 401, 'UNAUTHORIZED');

@@ -19,6 +19,7 @@ export class UserController {
       }
 
       const user = await userService.createUser(data)
+      
 
       const wallet = await walletService.craeteWallet(user.id)
 
