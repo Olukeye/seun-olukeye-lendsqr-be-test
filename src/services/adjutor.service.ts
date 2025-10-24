@@ -1,5 +1,5 @@
 import axios from 'axios';
-import logger from '../../utils/logger';
+import logger from '../utils/logger';
 
 const ADJUTOR_API_URL = process.env.ADJUTOR_API_URL || 'https://adjutor.lendsqr.com/v2';
 const ADJUTOR_API_KEY = process.env.ADJUTOR_API_KEY || '';

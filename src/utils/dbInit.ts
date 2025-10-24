@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
 import path from 'path';
 
-// Load .env from project root
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 export async function ensureDatabaseExists(): Promise<void> {

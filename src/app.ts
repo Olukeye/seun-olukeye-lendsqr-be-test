@@ -4,9 +4,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
-// import routes from './routes';
+import routes from './routes/user.routes';
 import { stream } from './utils/logger';
-// import { errorHandler, notFoundHandler } from './middleware/error.middleware';
+// import { errorHandler, notFoundHandler } from './utils/errors';
 
 const app: Application = express();
 
@@ -34,7 +34,7 @@ app.get('/health', (_req: Request, res: Response) => {
   });
 });
 
-// app.use('/api/v1', routes);
+app.use('/api/v1', routes);
 // app.use(notFoundHandler);
 // app.use(errorHandler);
 

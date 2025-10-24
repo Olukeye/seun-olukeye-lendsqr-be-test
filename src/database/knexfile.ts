@@ -3,7 +3,6 @@ import { Knex } from 'knex';
 import path from 'path';
 import { ensureDatabaseExists } from '../utils/dbInit';
 
-// Call before exporting config
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 
