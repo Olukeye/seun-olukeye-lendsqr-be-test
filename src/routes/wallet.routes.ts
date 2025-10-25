@@ -14,7 +14,7 @@ const router = Router();
 router.use(authenticate);
 
 // router.get('/balance', walletController.getBalance);
-// router.post('/fund', validate(fundWalletSchema), walletController.fundWallet);
+router.post('/fund', validate(fundWalletSchema), walletController.fundWallet);
 router.post('/transfer', validate(transferFundsSchema), walletController.transferFunds);
 // router.post('/withdraw', validate(withdrawFundsSchema), walletController.withdrawFunds);
 // router.get('/transactions', walletController.getTransactionHistory);
