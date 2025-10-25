@@ -1,12 +1,11 @@
 import dotenv from 'dotenv';
 
-// Load test environment variables
 dotenv.config({ path: '.env.test' });
 
+// Set test environment
 process.env.NODE_ENV = 'test';
-process.env.JWT_SECRET = '7hdy-supe7-het*56-jwt-key-change-this';
+process.env.JWT_SECRET = 'test-secret-key';
 
-// Mock console methods to reduce test output noise
 global.console = {
   ...console,
   log: jest.fn(),
@@ -16,5 +15,4 @@ global.console = {
   error: jest.fn(),
 };
 
-// Increase test timeout for database operations
 jest.setTimeout(10000);
