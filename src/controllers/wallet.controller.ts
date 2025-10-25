@@ -1,13 +1,12 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { AuthRequest } from '../middleware/auth.middleware';
 import walletService from '../services/wallet.service';
-import { InsufficientFundsError, NotFoundError, } from "../utils/errors";
 import { FundWalletDTO, TransferFundsDTO, WithdrawFundsDTO} from '../models/models/types';
 import logger from "../utils/logger";
 import { HttpStatusCode } from "axios";
 
 export class WalletController {
-  async fundWallet(req: AuthRequest, res:Response, next:NextFunction):Promise<void>{
+  async fundWallet(req: AuthRequest, res:Response, _next:NextFunction):Promise<void>{
     const userId = req.user!.userId;
     const data:FundWalletDTO = req.body;
 
@@ -35,7 +34,7 @@ export class WalletController {
     }
   }
 
-  async transferFunds(req: AuthRequest, res:Response, next:NextFunction):Promise<void>{
+  async transferFunds(req: AuthRequest, res:Response, _next:NextFunction):Promise<void>{
     const userId = req.user!.userId;
     const data:TransferFundsDTO = req.body;
 
@@ -61,6 +60,31 @@ export class WalletController {
     }catch(error){             
       logger.error(error);
       throw new Error('Failed to transfer funds');
+    }
+  }
+
+    async withdrawFunds(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = req.user!.userId;
+      const data: WithdrawFundsDTO = req.body;
+
+      const transaction = await walletService.withdrawFund(userId, data);
+      const wallet = await walletService.getWalletByUserId(userId);
+
+      res.json({
+        status: 'success',
+        data: {
+          transaction: {
+            id: transaction.id,
+            amount: transaction.amount,
+            balance: wallet.balance,
+            reference: transaction.reference,
+            createdAt: transaction.created_at,
+          },
+        },
+      });
+    } catch (error) {
+      next(error);
     }
   }
 }

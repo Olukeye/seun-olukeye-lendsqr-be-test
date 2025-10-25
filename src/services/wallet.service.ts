@@ -1,5 +1,5 @@
 import db from "../config/database";
-import { Wallet, FundWalletDTO, Transaction, TransactionType, TransactionStatus, TransferFundsDTO} from "../models/models/types";
+import { Wallet, FundWalletDTO, Transaction,WithdrawFundsDTO, TransactionType, TransactionStatus, TransferFundsDTO} from "../models/models/types";
 import userService from "./user.service";
 import { DuplicateReferenceError, InsufficientFundsError, NotFoundError} from "../utils/errors";
 import { generateUniqueAccountNumber, generateUniqueSavingsId } from '../utils/uniqueIdGenerator'
@@ -221,6 +221,58 @@ export class WalletService {
 
       logger.error('Error funding wallet:', error);
       throw new Error('Failed to fund wallet');
+    }
+  }
+
+  async withdrawFund(userId: number, data:WithdrawFundsDTO):Promise<Transaction> {
+    const tranx = await db.transaction();
+    try{
+      const wallet = await tranx('wallets').where({user_id:userId}).first().forUpdate()
+
+      if(!wallet){
+        await tranx.rollback()
+        throw new  NotFoundError("wallet not found")
+      }
+
+      if(parseFloat(wallet.balance) < data.amount){
+        await tranx.rollback()
+        throw new InsufficientFundsError()
+      }
+
+      const newBalance = parseFloat(wallet.balance) - data.amount;
+      await tranx('wallets').where({id: wallet.id}).update({balance:newBalance})
+
+      const reference = `WTH${Date.now()}${wallet.id}`;
+
+      const[txnId] = await tranx('transactions').insert({
+          wallet_id: wallet.id,
+          type: TransactionType.DEBIT,
+          amount: data.amount,
+          reference,
+          description: 'Withdrawal',
+          status: 'completed',
+          metadata: JSON.stringify({
+            bank_account: data.bankAccount,
+            bank_code: data.bankCode,
+        }),
+      });
+
+      tranx.commit();
+
+      const transaction = await this.getTransactionById(txnId)
+      logger.info(`Withdrawal of ${data.amount} from wallet ${wallet.id}`)
+
+      return transaction;
+      
+    }catch(error){
+      await tranx.rollback();
+      
+      if (error instanceof NotFoundError || error instanceof InsufficientFundsError) {
+        throw error;
+      }
+      
+      logger.error('Error withdrawing funds:', error);
+      throw new Error('Failed to withdraw funds');
     }
   }
 }
