@@ -2,7 +2,7 @@ import type { Knex } from "knex";
 
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable('transactions', (table) => {
+   return knex.schema.createTable('transactions', (table) => {
     table.increments('id').primary();
     table.integer('wallet_id').unsigned().notNullable();
     table.enum('type', ['credit', 'debit', 'transfer']).notNullable();
@@ -28,3 +28,4 @@ export async function up(knex: Knex): Promise<void> {
 export async function down(knex: Knex): Promise<void> {
   await knex.schema.dropTableIfExists('transactions');
 }
+

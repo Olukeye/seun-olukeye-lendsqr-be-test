@@ -3,9 +3,8 @@ import { User, CreateUserDTO } from "../models/models/types";
 import { NotFoundError, UserExistError } from "../utils/errors";
 import logger from "../utils/logger";
 
-
 export class UserService {
-  async createUser(data: CreateUserDTO): Promise<User>{
+  async createUser(data: CreateUserDTO):Promise<User>{
     try{
       const existingUser = await db('users').where({email: data.email}).first()
 
@@ -14,8 +13,8 @@ export class UserService {
     }
 
     const [userId] = await db('users').insert({
-      first_name: data.firstName,
-      last_name:data.lastName,
+      first_name: data.first_name,
+      last_name:data.last_name,
       email:data.email,
       phone: data.phone,
       is_blacklisted: false
@@ -23,7 +22,8 @@ export class UserService {
 
     const user = await this.getUserById(userId)
 
-    return user
+    return user;
+
     }catch(error){
       logger.error('Error creating user:', error);
       throw new Error('Failed to create user');

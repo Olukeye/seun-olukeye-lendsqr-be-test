@@ -4,7 +4,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
-import routes from './routes/user.routes';
 import { stream } from './utils/logger';
 import { errorHandler, notFoundHandler } from './middleware/errors.middlewares';
 
@@ -34,7 +33,9 @@ app.get('/health', (_req: Request, res: Response) => {
   });
 });
 
-app.use('/api/v1', routes);
+app.use("/api/v1/users", require("../src/routes/user.routes"));
+app.use("/api/v1/wallet", require("../src/routes/wallet.routes"));
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 

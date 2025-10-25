@@ -5,12 +5,12 @@ export const createUserSchema = Joi.object({
     'string.email': 'Please provide a valid email address',
     'any.required': 'Email is required',
   }),
-  firstName: Joi.string().min(2).max(100).required().messages({
+  first_name: Joi.string().min(2).max(100).required().messages({
     'string.min': 'First name must be at least 2 characters',
     'string.max': 'First name cannot exceed 100 characters',
     'any.required': 'First name is required',
   }),
-  lastName: Joi.string().min(2).max(100).required().messages({
+  last_name: Joi.string().min(2).max(100).required().messages({
     'string.min': 'Last name must be at least 2 characters',
     'string.max': 'Last name cannot exceed 100 characters',
     'any.required': 'Last name is required',
@@ -22,6 +22,13 @@ export const createUserSchema = Joi.object({
       'string.pattern.base': 'Please provide a valid phone number',
       'any.required': 'Phone number is required',
     }),
+});
+
+export const loginSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    'string.email': 'Please provide a valid email address',
+    'any.required': 'Email is required',
+  }),
 });
 
 export const fundWalletSchema = Joi.object({
@@ -37,9 +44,9 @@ export const fundWalletSchema = Joi.object({
 });
 
 export const transferFundsSchema = Joi.object({
-  recipientEmail: Joi.string().email().required().messages({
-    'string.email': 'Please provide a valid recipient email address',
-    'any.required': 'Recipient email is required',
+  account_no: Joi.string().required().messages({
+    'string.account_no': 'Please provide a valid recipient account number',
+    'any.required': 'Recipient account number is required',
   }),
   amount: Joi.number().positive().precision(2).required().messages({
     'number.positive': 'Amount must be greater than 0',

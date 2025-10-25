@@ -4,7 +4,8 @@ import path from 'path';
 import { ensureDatabaseExists } from '../utils/dbInit';
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
-
+const migrationsDir = path.resolve(__dirname, './migrations');
+const seedsDir = path.resolve(__dirname, './seeds');
 
 (async () => {
   await ensureDatabaseExists();
@@ -19,7 +20,7 @@ const config: { [key: string]: Knex.Config } = {
       port: parseInt(process.env.DB_PORT || '3306'),
       user: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD  || '',
-      database: process.env.DB_NAME  || 'demo_credit',
+      database: process.env.DB_NAME  || 'lendqr_demo_credit',
       charset: 'utf8mb4',
     },
     pool: {
@@ -28,11 +29,11 @@ const config: { [key: string]: Knex.Config } = {
     },
     migrations: {
       tableName: 'user_migrations',
-      directory: './migrations',
+      directory: migrationsDir,
       extension: 'ts',
     },
     seeds: {
-     directory: path.resolve(__dirname, './seeds'),
+     directory: seedsDir,
       extension: 'ts',
     },
   },
@@ -72,7 +73,7 @@ const config: { [key: string]: Knex.Config } = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: path.resolve(__dirname, './seeds'),
+      directory: seedsDir,
       extension: 'ts',
     },
   },
