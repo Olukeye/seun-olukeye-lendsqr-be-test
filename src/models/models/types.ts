@@ -14,6 +14,10 @@ export interface Wallet {
   user_id: number;
   balance: number;
   currency: string;
+  account_no:string;
+  savings_id:string;
+  account_name:string;
+  provider:string;
   created_at: Date;
   updated_at: Date;
 }
@@ -45,8 +49,8 @@ export interface Transaction {
 
 export interface CreateUserDTO {
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string
+  last_name: string
   phone: string;
 }
 
@@ -56,7 +60,7 @@ export interface FundWalletDTO {
 }
 
 export interface TransferFundsDTO {
-  recipientEmail: string;
+  account_no: string;
   amount: number;
   description?: string;
 }

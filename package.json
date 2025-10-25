@@ -13,7 +13,8 @@
     "test": "jest --coverage --verbose",
     "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "eslint . --ext .ts --fix",
+    "db:reset": "ts-node src/database/reset-db.ts"
   },
   "keywords": [
     "wallet",
