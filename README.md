@@ -296,7 +296,7 @@ Common error codes:
 
 1. Clone the repository
 ```bash
-git clone <repository-url>
+git clone
 cd demo-credit-wallet
 ```
 
