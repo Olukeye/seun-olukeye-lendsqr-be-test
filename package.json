@@ -2,7 +2,7 @@
   "name": "demo-credit-wallet",
   "version": "1.0.0",
   "description": "A robust MVP wallet service built with NodeJS, TypeScript, MySQL, and KnexJS for managing user accounts, funds, and peer-to-peer transactions",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
