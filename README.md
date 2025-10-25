@@ -86,11 +86,6 @@ src/
 
 ## API Documentation
 
-### Base URL
-```
-https://<your-name>-lendsqr-be-test.herokuapp.com/api/v1
-```
-
 ### Authentication
 All endpoints (except user creation) require a Bearer token:
 ```
