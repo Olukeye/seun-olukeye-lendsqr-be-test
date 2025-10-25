@@ -5,6 +5,7 @@ import adjutorService from "../services/adjutor.service";
 import { CreateUserDTO } from "../models/models/types";
 import { generateToken } from "../utils/jwt";
 import { BlacklistedUserError, NotFoundError } from "../utils/errors";
+import logger from "../utils/logger";
 
 
 export class UserController {
@@ -93,6 +94,7 @@ async login(req: Request, res: Response, next: NextFunction): Promise<void> {
         },
       });
     } catch (error) {
+       logger.error(error);
       next(error);
     }
   }

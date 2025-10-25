@@ -110,7 +110,7 @@ export class WalletService {
       const [tranxId] = await tranx('transactions').insert({
         wallet_id:wallet.id,
         type: TransactionType.CREDIT,
-        ammount: data.amount,
+        amount: data.amount,
         reference:data.reference,
         description:`Wallet funding via external source`,
         recipient_wallet_id: null,
