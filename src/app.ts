@@ -33,8 +33,8 @@ app.get('/health', (_req: Request, res: Response) => {
   });
 });
 
-app.use("/api/v1/users", require("../src/routes/user.routes"));
-app.use("/api/v1/wallet", require("../src/routes/wallet.routes"));
+app.use("/api/v1/users", require("./routes/user.routes"));
+app.use("/api/v1/wallet", require("./routes/wallet.routes"));
 
 app.use(notFoundHandler);
 app.use(errorHandler);
