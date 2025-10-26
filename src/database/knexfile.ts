@@ -15,7 +15,7 @@ const seedsDir = path.resolve(__dirname, './seeds');
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'mysql2',
-    connection: {
+    connection:process.env.DATABASE_URL || {
       host: process.env.DB_HOST || 'localhost',
       port: parseInt(process.env.DB_PORT || '3306'),
       user: process.env.DB_USER || 'root',
