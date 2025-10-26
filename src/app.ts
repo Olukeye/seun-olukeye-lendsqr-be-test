@@ -25,16 +25,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined', { stream }));
 
-app.get('/health', (_req: Request, res: Response) => {
+app.get('/', (_req: Request, res: Response) => {
   res.json({
     status: 'success',
-    message: 'Demo Credit Wallet API is running',
+    message: 'Lendsqr Demo Credit Wallet API is running',
     timestamp: new Date().toISOString(),
   });
 });
 
-app.use("/api/v1/users", require("./routes/user.routes"));
-app.use("/api/v1/wallet", require("./routes/wallet.routes"));
+app.use("/api/v1/users", require("../src/routes/user.routes"));
+app.use("/api/v1/wallet", require("../src/routes/wallet.routes"));
 
 app.use(notFoundHandler);
 app.use(errorHandler);
